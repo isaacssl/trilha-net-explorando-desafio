@@ -15,43 +15,49 @@ namespace DesafioProjetoHospedagem.Models
 
         public void CadastrarHospedes(List<Pessoa> hospedes)
         {
-            // TODO: Verificar se a capacidade é maior ou igual ao número de hóspedes sendo recebido
-            // *IMPLEMENTE AQUI*
-            if (true)
+            if (Suite == null)
+            {
+                throw new Exception("A Suíte ainda não foi adicionada.");
+            }
+
+            if (hospedes.Count <= Suite.Capacidade)
             {
                 Hospedes = hospedes;
             }
             else
             {
-                // TODO: Retornar uma exception caso a capacidade seja menor que o número de hóspedes recebido
-                // *IMPLEMENTE AQUI*
+                throw new Exception("A capacidade da suíte é insuficiente para acomodar todos os hópedes.");
             }
         }
 
         public void CadastrarSuite(Suite suite)
         {
             Suite = suite;
+            Console.WriteLine(Suite.Capacidade);
         }
 
         public int ObterQuantidadeHospedes()
         {
-            // TODO: Retorna a quantidade de hóspedes (propriedade Hospedes)
-            // *IMPLEMENTE AQUI*
+            if (!(Hospedes == null))
+            {
+                return Hospedes.Count;
+            }
+
             return 0;
         }
 
         public decimal CalcularValorDiaria()
         {
-            // TODO: Retorna o valor da diária
-            // Cálculo: DiasReservados X Suite.ValorDiaria
-            // *IMPLEMENTE AQUI*
-            decimal valor = 0;
-
-            // Regra: Caso os dias reservados forem maior ou igual a 10, conceder um desconto de 10%
-            // *IMPLEMENTE AQUI*
-            if (true)
+            if (Hospedes == null)
             {
-                valor = 0;
+                throw new Exception("Reserva incompleta. Por favor, verifique se a Suíte e os Hóspedes foram devidamente atribuidos.");
+            }
+
+            decimal valor = DiasReservados * Suite.ValorDiaria;
+
+            if (DiasReservados >= 10)
+            {
+                return valor * Convert.ToDecimal(0.9);
             }
 
             return valor;
